@@ -1,0 +1,34 @@
+import { EntityRepository } from '@mikro-orm/mongodb'
+import { DI } from 'app'
+import { Item, ItemType } from 'model'
+import ItemFilter from 'types/ItemFilter'
+import ItemQueryResult from 'types/ItemQueryResult'
+
+export class ItemRepository extends EntityRepository<Item> {
+    async findByFilter(itemFilter: ItemFilter): Promise<ItemQueryResult> {
+        let filter = {} as {
+            type: ItemType
+        }
+
+        if (itemFilter.itemTypeId) {
+            const itemType = await DI.itemTypesRepository.findOneOrFail(itemFilter.itemTypeId)
+            filter.type = itemType
+        }
+
+        const offset = (itemFilter.page - 1) * itemFilter.pageSize
+
+        const [result, count] = await super.findAndCount(
+            filter,
+            ['type'],
+            undefined,
+            itemFilter.pageSize,
+            offset
+        )
+
+        return {
+            items: result,
+            pageSize: itemFilter.pageSize,
+            totalQty: count,
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "lib": ["esnext"],
+        "outDir": "./dist",
+        "sourceMap": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "forceConsistentCasingInFileNames": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "esModuleInterop": true,
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "declaration": true,
+        "isolatedModules": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "strictPropertyInitialization": false,
+        "baseUrl": "./src"
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+}
