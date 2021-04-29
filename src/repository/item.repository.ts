@@ -1,3 +1,4 @@
+import { QueryOrder } from '@mikro-orm/core'
 import { EntityRepository } from '@mikro-orm/mongodb'
 import { DI } from 'app'
 import { Item, ItemType } from 'model'
@@ -19,15 +20,14 @@ export class ItemRepository extends EntityRepository<Item> {
 
         const [result, count] = await super.findAndCount(
             filter,
-            ['type'],
-            undefined,
+            ['type', 'user'],
+            { createdAt: QueryOrder.DESC },
             itemFilter.pageSize,
             offset
         )
 
         return {
             items: result,
-            pageSize: itemFilter.pageSize,
             totalQty: count,
         }
     }

@@ -8,12 +8,12 @@ const router = Router()
 router.get('/', authorize(['ADMIN']), UserController.getAllUsers)
 
 // Get One USer
-router.get('/:id', authorize(), UserController.getOneById)
+router.get('/', authorize(), UserController.getOneById)
 
 // Edit Existing User
-router.patch('/:id', authorize(), UserController.editUser)
+router.patch('/', authorize(), UserController.editUser)
 
 // Delete Existing User
-router.delete('/:id', authorize(), UserController.deleteUser)
+router.delete('/', authorize(), UserController.deleteUser)
 
 export default router

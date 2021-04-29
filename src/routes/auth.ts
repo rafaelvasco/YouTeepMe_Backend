@@ -10,6 +10,9 @@ router.post('/register', AuthController.signup)
 // Login
 router.post('/login', AuthController.login)
 
+// Logout
+router.post('/logout', AuthController.logout)
+
 // Change Password
 router.post('/change-password', authorize(), AuthController.changePassword)
 

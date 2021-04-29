@@ -75,6 +75,27 @@ export class AuthController {
         }
     }
 
+    static logout = async (req: Request, res: Response) => {
+        const refreshToken = req.cookies[REFRESH_COOKIE_NAME]
+        const authToken = req.cookies[AUTH_COOKIE_NAME]
+
+        const tokenDb = await DI.refreshTokenRepository.findOne({ token: refreshToken })
+
+        if (tokenDb) {
+            await DI.refreshTokenRepository.removeAndFlush(tokenDb)
+        }
+
+        if (authToken) {
+            res.clearCookie(AUTH_COOKIE_NAME)
+        }
+
+        if (refreshToken) {
+            res.clearCookie(REFRESH_COOKIE_NAME)
+        }
+
+        return res.status(200).json(true)
+    }
+
     static login = async (req: Request, res: Response) => {
         const schema = Joi.object({
             email: Joi.string().required(),
@@ -129,6 +150,7 @@ export class AuthController {
         const authToken = req.cookies[AUTH_COOKIE_NAME]
 
         if (!refreshToken) {
+            console.log('Error: Missing Token')
             return res.status(403).json({ message: 'Missing Token' })
         }
 
@@ -141,6 +163,7 @@ export class AuthController {
             })
 
             if (!tokenDoc) {
+                console.log('Error: Token not found in db')
                 return res.status(403).json({ message: 'Token not found in DB' })
             }
 
@@ -148,7 +171,7 @@ export class AuthController {
 
             if (!user) {
                 await DI.refreshTokenRepository.removeAndFlush(tokenDoc)
-
+                console.log('Error: Invalid token user')
                 return res.status(403).json({ message: 'Invalid Token User' })
             }
 
@@ -171,9 +194,11 @@ export class AuthController {
             return res.status(200).json(user)
         } catch (e) {
             if (e.name === 'TokenExpiredError') {
-                return res.status(401).json({ message: 'Session timed out,please login again' })
+                console.log('Session timed out, please login again')
+                return res.status(403).json({ message: 'Session timed out,please login again' })
             } else if (e.name === 'JsonWebTokenError') {
-                return res.status(401).json({ message: 'Invalid token,please login again!' })
+                console.log('Invalid token,please login again!')
+                return res.status(403).json({ message: 'Invalid token,please login again!' })
             } else {
                 console.error(e)
                 return res.status(500).json({ e })

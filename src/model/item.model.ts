@@ -1,23 +1,47 @@
 import { Entity, ManyToOne, Property } from '@mikro-orm/core'
-import { BaseModel, ItemType } from 'model'
+import { BaseModel, ItemType, User } from 'model'
 import { ItemRepository } from 'repository'
-import { User } from './user.model'
 
 @Entity({ collection: 'items', customRepository: () => ItemRepository })
 export class Item extends BaseModel {
     @Property()
     name!: string
 
+    @Property()
+    content!: string
+
     @ManyToOne({ entity: () => ItemType })
     type!: ItemType
 
-    @ManyToOne({ entity: () => User, mapToPk: true })
-    userId!: string
+    @ManyToOne({ entity: () => User })
+    user!: User
 
-    constructor(name: string, type: ItemType, userId: string) {
+    @Property()
+    active!: boolean
+
+    @Property()
+    createdAt = new Date()
+
+    @Property({ onUpdate: () => new Date() })
+    updatedAt = new Date()
+
+    @Property()
+    mainImage!: string
+
+    constructor(
+        name: string,
+        content: string,
+        type: ItemType,
+        user: User,
+        active: boolean,
+        images: string[]
+    ) {
         super()
         this.name = name
         this.type = type
-        this.userId = userId
+        this.content = content
+        this.user = user
+        this.active = active
+        this.mainImage = images[0]
     }
 }

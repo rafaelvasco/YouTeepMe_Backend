@@ -4,6 +4,7 @@ import { DI } from 'app'
 import { Item } from 'model'
 import Joi from 'joi'
 import { validateRequest } from 'middleware/schemaValidate'
+import { uploadFile } from 'middleware/s3Client'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {
@@ -44,7 +45,7 @@ export class ItemController {
         }
 
         try {
-            const result = await DI.itemRepository.findOne(id)
+            const result = await DI.itemRepository.findOne(id, ['user', 'type'])
 
             if (!result) {
                 return res.status(404).json({ message: 'Item not found.' })
@@ -59,9 +60,13 @@ export class ItemController {
     static createItem = async (req: Request, res: Response) => {
         console.info('ItemController::createItem')
 
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).json({ message: 'Missing Image File' })
+        }
+
         const schema = Joi.object({
             name: Joi.string().required().max(255),
-            type: Joi.required(),
+            typeId: Joi.required(),
             userId: Joi.required(),
         })
 
@@ -71,14 +76,21 @@ export class ItemController {
             return res.status(400).json({ message: processRequestResult.error })
         }
 
-        const { name, type, userId } = processRequestResult.value
+        const { name, typeId, userId, content } = processRequestResult.value
 
         try {
-            const typeObj = await DI.itemTypesRepository.findOneOrFail(type.id)
+            const typeObj = await DI.itemTypesRepository.findOneOrFail(typeId)
 
-            let item = new Item(name, typeObj, userId)
+            const user = await DI.userRepository.findOneOrFail(userId)
+
+            const mainImage = req.files.mainImage as any
+
+            const mainImagePath = await uploadFile(mainImage.name, mainImage.data)
+
+            const item = new Item(name, content, typeObj, user, false, [mainImagePath])
 
             await DI.itemRepository.persistAndFlush(item)
+
             return res.status(201).json({ message: 'Operation Successful' })
         } catch (e) {
             return res.status(500).json({ message: e.message })
@@ -111,7 +123,7 @@ export class ItemController {
         try {
             const item = await DI.itemRepository.findOneOrFail(id)
 
-            if (item.userId !== userId) {
+            if (item.user.id !== userId) {
                 return res
                     .status(403)
                     .json({ message: 'Only the creator of an Item can modify it.' })
@@ -148,10 +160,10 @@ export class ItemController {
             const item = await DI.itemRepository.findOneOrFail(id)
 
             console.log(
-                `User Id: ${userId} trying to delete item created by userId: ${item.userId}`
+                `User Id: ${userId} trying to delete item created by userId: ${item.user.id}`
             )
 
-            const itemUser = await DI.userRepository.findOneOrFail(item.userId)
+            const itemUser = await DI.userRepository.findOneOrFail(item.user.id)
             const loggedUser = await DI.userRepository.findOneOrFail(userId)
 
             if (itemUser !== loggedUser) {

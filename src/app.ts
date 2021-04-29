@@ -9,6 +9,8 @@ import { ItemRepository, UserRepository } from 'repository'
 import { Item, ItemType, User } from 'model'
 import { RefreshToken } from 'model/refresh_token.model'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
+import { MAX_FILE_SIZE } from 'config/fileupload_config'
 
 require('dotenv').config()
 
@@ -78,6 +80,13 @@ class App {
         this.express.use(express.json())
         this.express.use(express.urlencoded({ extended: true }))
         this.express.use(cookieParser())
+        this.express.use(
+            fileUpload({
+                limits: {
+                    fileSize: MAX_FILE_SIZE * 1024 * 1024,
+                },
+            })
+        )
     }
 
     private configureRoutes() {

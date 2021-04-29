@@ -45,8 +45,9 @@ export class UserController {
         }
 
         const schema = Joi.object({
-            role: Joi.string().required(),
-        })
+            role: Joi.string(),
+            active: Joi.bool(),
+        }).or('role', 'active')
 
         const processRequestResult = validateRequest(req.body, schema)
 
@@ -54,14 +55,20 @@ export class UserController {
             return res.status(400).json(processRequestResult.error)
         }
 
-        const { role } = req.body
+        const { role, active } = req.body
 
         let user: User
 
         try {
             user = await DI.userRepository.findOneOrFail(id)
 
-            user.role = role
+            if (role) {
+                user.role = role
+            }
+
+            if (typeof active !== 'undefined') {
+                user.active = active
+            }
 
             await DI.userRepository.flush()
 
