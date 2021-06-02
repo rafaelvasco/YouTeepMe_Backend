@@ -4,7 +4,7 @@ import { DI } from 'app'
 import { Item } from 'model'
 import Joi from 'joi'
 import { validateRequest } from 'middleware/schemaValidate'
-import { uploadFile } from 'middleware/s3Client'
+import { deleteFile, uploadFile } from 'middleware/s3Client'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ export class ItemController {
         filter.tags ??= []
         filter.page ??= 1
         filter.pageSize ??= 100
-        filter.itemTypeId ??= null
+        filter.type ??= null
 
         try {
             const result = await DI.itemRepository.findByFilter(filter)
@@ -60,10 +60,6 @@ export class ItemController {
     static createItem = async (req: Request, res: Response) => {
         console.info('ItemController::createItem')
 
-        if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(400).json({ message: 'Missing Image File' })
-        }
-
         const schema = Joi.object({
             name: Joi.string().required().max(255),
             typeId: Joi.required(),
@@ -83,11 +79,21 @@ export class ItemController {
 
             const user = await DI.userRepository.findOneOrFail(userId)
 
-            const mainImage = req.files.mainImage as any
+            let mainImagePath = null
 
-            const mainImagePath = await uploadFile(mainImage.name, mainImage.data)
+            if (req.files && req.files.mainImage) {
+                const mainImage = req.files.mainImage as any
+                mainImagePath = await uploadFile(mainImage.name, mainImage.data)
+            }
 
-            const item = new Item(name, content, typeObj, user, false, [mainImagePath])
+            const item = new Item(
+                name,
+                content,
+                typeObj,
+                user,
+                false,
+                mainImagePath ? [mainImagePath] : []
+            )
 
             await DI.itemRepository.persistAndFlush(item)
 
@@ -110,7 +116,8 @@ export class ItemController {
         const schema = Joi.object({
             name: Joi.string(),
             type: Joi.string(),
-        }).or('name', 'type')
+            content: Joi.string(),
+        }).or('name', 'type', 'content')
 
         const processRequestResult = validateRequest(req.body, schema)
 
@@ -118,7 +125,7 @@ export class ItemController {
             return res.status(400).json(processRequestResult.error)
         }
 
-        const { name, type } = processRequestResult.value
+        const { name, type, content } = processRequestResult.value
 
         try {
             const item = await DI.itemRepository.findOneOrFail(id)
@@ -136,6 +143,10 @@ export class ItemController {
             if (type) {
                 const typeObj = await DI.itemTypesRepository.findOneOrFail(type)
                 item.type = typeObj
+            }
+
+            if (content) {
+                item.content = content
             }
 
             await DI.itemRepository.flush()
@@ -172,7 +183,12 @@ export class ItemController {
                     .json({ message: 'Only the creator of an Item can delete it.' })
             }
 
+            if (item.mainImage) {
+                await deleteFile(item.mainImage)
+            }
+
             await DI.itemRepository.remove(item).flush()
+
             return res.status(200).json({ message: 'Operation Successful' })
         } catch (e) {
             return res.status(500).json({ message: e.message })

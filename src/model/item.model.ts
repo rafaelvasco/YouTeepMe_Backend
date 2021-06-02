@@ -26,7 +26,7 @@ export class Item extends BaseModel {
     updatedAt = new Date()
 
     @Property()
-    mainImage!: string
+    mainImage: string | null
 
     constructor(
         name: string,
@@ -42,6 +42,6 @@ export class Item extends BaseModel {
         this.content = content
         this.user = user
         this.active = active
-        this.mainImage = images[0]
+        this.mainImage = images.length > 0 ? images[0] : null
     }
 }

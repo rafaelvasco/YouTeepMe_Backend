@@ -1,6 +1,6 @@
 type ItemFilter = {
-    itemTypeId: string | null
-    tags: string[]
+    type: string | null
+    tags: string[] | null
     page: number
     pageSize: number
 }

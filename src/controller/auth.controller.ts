@@ -114,7 +114,7 @@ export class AuthController {
             const user = await DI.userRepository.findOne({ email })
 
             if (!user) {
-                return res.status(401).json({ message: 'Invalid email or password.' })
+                return res.status(403).json({ message: 'Invalid email or password.' })
             }
 
             const validPassword = await verifyPassword(password, user.password)
@@ -136,7 +136,7 @@ export class AuthController {
 
                 return res.status(201).json(user)
             } else {
-                return res.status(401).json({ message: 'Invalid email or password.' })
+                return res.status(403).json({ message: 'Invalid email or password.' })
             }
         } catch (e) {
             return res.status(500).json({ message: e.message })
@@ -228,7 +228,7 @@ export class AuthController {
             user = await DI.userRepository.findOneOrFail(userId)
 
             if (!user.checkPassword(oldPassword)) {
-                return res.status(401).json("Invalid 'oldPassword'")
+                return res.status(403).json("Invalid 'oldPassword'")
             }
 
             user.password = newPassword

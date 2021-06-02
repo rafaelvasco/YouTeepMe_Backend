@@ -11,8 +11,8 @@ export class ItemRepository extends EntityRepository<Item> {
             type: ItemType
         }
 
-        if (itemFilter.itemTypeId) {
-            const itemType = await DI.itemTypesRepository.findOneOrFail(itemFilter.itemTypeId)
+        if (itemFilter.type) {
+            const itemType = await DI.itemTypesRepository.findOneOrFail(itemFilter.type)
             filter.type = itemType
         }
 
