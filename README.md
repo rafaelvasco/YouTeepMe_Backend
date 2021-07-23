@@ -1,8 +1,9 @@
+YouTeepMe Backend on Node.JS
 ---
-API Made with Express/Node.JS
 
 Libs Used:
 
+- Express
 - MikroORM/MongoDB
 - AWS SDK
 - Axios
