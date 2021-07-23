@@ -1,0 +1,14 @@
+---
+API Made with Express/Node.JS
+
+Libs Used:
+
+- MikroORM/MongoDB
+- AWS SDK
+- Axios
+- BCryptJS
+- Cheerio
+- Express FileUpload
+- Helmet
+- Joi
+- jsonwebtoken
