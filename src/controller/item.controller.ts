@@ -83,6 +83,7 @@ export class ItemController {
 
             if (req.files && req.files.mainImage) {
                 const mainImage = req.files.mainImage as any
+                console.log(mainImage)
                 mainImagePath = await uploadFile(mainImage.name, mainImage.data)
             }
 
@@ -194,6 +195,4 @@ export class ItemController {
             return res.status(500).json({ message: e.message })
         }
     }
-
-    
 }
