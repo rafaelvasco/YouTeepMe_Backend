@@ -15,9 +15,9 @@
     "@hapi/hoek" "^9.0.0"
 
 "@mikro-orm/core@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/core/-/core-4.5.1.tgz#88695e941b95aa7405050c6aa632f320984cc6a2"
-  integrity sha512-J0+H7gaI0TaJ7ayZZjUUUpgW8GQUCYz3/2e1N2IBm4wNOA6S/eCwv3vel6XohbZnHybb8otA40tQHNeGuXt33g==
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/core/-/core-4.5.7.tgz#fbbeab32853487830db72828af96a340b68f0327"
+  integrity sha512-OprNuBoBynOoIvUtEq/wnoO5HLqeJZA1MCJXBo5yfpIVXR85pLX6jO8fO9NVxELelNBN5Qdj2jhIfby9tbp/mw==
   dependencies:
     ansi-colors "4.1.1"
     clone "2.1.2"
@@ -29,17 +29,17 @@
     strip-json-comments "3.1.1"
 
 "@mikro-orm/mongodb@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/mongodb/-/mongodb-4.5.1.tgz#31073cfd614a171c5e69fedf4c0d020afe5f3fda"
-  integrity sha512-sJC0IHIPF1g4UV0+qhVm+ZAzuWU9t3ppbSPXEJZUhfXmv2J/6uyHzDwnUY42E5iD+ygCCKuw1kzFGLKVMIM62Q==
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/mongodb/-/mongodb-4.5.7.tgz#37e38947316965a9381d03f16f277b5068cc9b6f"
+  integrity sha512-KwV90Ujjgc5BHleuhIbf01GgPbGA+BHflSadAWjZPSzcEWh/iRXQpzPLcvbvI6LKxjW6k2wpVpP1o//Hca1AJg==
   dependencies:
-    "@types/mongodb" "3.6.10"
-    mongodb "3.6.5"
+    "@types/mongodb" "3.6.12"
+    mongodb "3.6.6"
 
 "@mikro-orm/reflection@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/reflection/-/reflection-4.5.1.tgz#8bfec62288af28b19d9875cdf5180fd17dadf9ef"
-  integrity sha512-pPFoliyLbnM9PYs+yDygZjir3AITwka0cFwVvNz/XqWP0X5QcDJZLUvtbXUDzMGMYUYduJFwgo2p5JQMHgIKWA==
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/reflection/-/reflection-4.5.7.tgz#7e3a02eab39229cf7e561b84d2c8e997ac3408b1"
+  integrity sha512-T5KFm40jnU8mnDBBD+Q70ZGJ4z2xMqn0dUUbVuqmpyNnc9euHMbY7GYlUeoae9V8S9iMIBxwVhTEuWv/kwvAXg==
   dependencies:
     globby "11.0.3"
     ts-morph "10.0.2"
@@ -185,10 +185,10 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
 
-"@types/mongodb@3.6.10":
-  version "3.6.10"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.6.10.tgz#80cceaabeec9f460e5b46844e938e8eba74f9266"
-  integrity sha512-BkwAHFiZSSWdTIqbUVGmgvIsiXXjqAketeK7Izy7oSs6G3N8Bn993tK9eq6QEovQDx6OQ2FGP2KWDDxBzdlJ6Q==
+"@types/mongodb@3.6.12":
+  version "3.6.12"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.6.12.tgz#727960d34f35054d2f2ce68909e16094f742d935"
+  integrity sha512-49aEzQD5VdHPxyd5dRyQdqEveAg9LanwrH8RQipnMuulwzKmODXIZRp0umtxi1eBUfEusRkoy8AVOMr+kVuFog==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
@@ -1594,7 +1594,20 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mongodb@3.6.5, mongodb@^3.6.5:
+mongodb@3.6.6:
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.6.tgz#92e3658f45424c34add3003e3046c1535c534449"
+  integrity sha512-WlirMiuV1UPbej5JeCMqE93JRfZ/ZzqE7nJTwP85XzjAF4rRSeq2bGCb1cjfoHLOF06+HxADaPGqT0g3SbVT1w==
+  dependencies:
+    bl "^2.2.1"
+    bson "^1.1.4"
+    denque "^1.4.1"
+    optional-require "^1.0.2"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
+mongodb@^3.6.5:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.6.5.tgz#c27d786fd4d3c83dc19302483707d12a9d2aee5f"
   integrity sha512-mQlYKw1iGbvJJejcPuyTaytq0xxlYbIoVDm2FODR+OHxyEiMR021vc32bTvamgBjCswsD54XIRwhg3yBaWqJjg==
@@ -1690,6 +1703,13 @@ once@^1.3.1, once@^1.4.0:
   integrity sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
   dependencies:
     wrappy "1"
+
+optional-require@^1.0.2:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/optional-require/-/optional-require-1.1.6.tgz#886693c22d166c79377137dfb60cd653fa49a967"
+  integrity sha512-ZO2GGh1A84LV90OAIsMDmIJ5k/f7crSjP4aJSuLudp7C7wfVOAoyWWHV8Jf3ZMHyNHwpLD/DGhzaxbbN/duF+g==
+  dependencies:
+    require-at "^1.0.6"
 
 p-cancelable@^1.0.0:
   version "1.1.0"
@@ -1929,6 +1949,11 @@ request@^2.88.2:
     tough-cookie "~2.5.0"
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
+
+require-at@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/require-at/-/require-at-1.0.6.tgz#9eb7e3c5e00727f5a4744070a7f560d4de4f6e6a"
+  integrity sha512-7i1auJbMUrXEAZCOQ0VNJgmcT2VOKPRl2YGJwgpHpC9CE91Mv4/4UYIUm4chGJaI381ZDq1JUicFii64Hapd8g==
 
 require_optional@^1.0.1:
   version "1.0.1"

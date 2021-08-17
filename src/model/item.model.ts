@@ -28,6 +28,9 @@ export class Item extends BaseModel {
     @Property()
     mainImage: string | null
 
+    @Property()
+    votes: number
+
     constructor(
         name: string,
         content: string,
@@ -43,5 +46,6 @@ export class Item extends BaseModel {
         this.user = user
         this.active = active
         this.mainImage = images.length > 0 ? images[0] : null
+        this.votes = 0
     }
 }

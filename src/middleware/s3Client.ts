@@ -6,6 +6,8 @@ require('dotenv').config()
 
 const client = new AWS.S3()
 
+const baseObjectUrl = process.env.AWS_OBJECT_BASE_URL
+
 const getFileNameFromPath = (filePath: string): string => {
     return path.basename(filePath)
 }
@@ -19,17 +21,18 @@ export const deleteFile = async (filePath: string) => {
         .promise()
 }
 
-export const uploadFile = async (fileName: string, content: Buffer) => {
-    const data = await client
-        .upload({
+export const uploadFile = async (fileName: string, content: Buffer, fileType: string) => {
+    console.log(content)
+
+    await client
+        .putObject({
+            ACL: 'public-read',
             Bucket: process.env.AWS_S3_BUCKET as string,
             Key: fileName,
             Body: content,
-            Metadata: {
-                'Content-Type': 'image/*',
-            },
+            ContentType: fileType,
         })
         .promise()
 
-    return data.Location
+    return baseObjectUrl + fileName
 }

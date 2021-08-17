@@ -5,6 +5,7 @@ import { Item } from 'model'
 import Joi from 'joi'
 import { validateRequest } from 'middleware/schemaValidate'
 import { deleteFile, uploadFile } from 'middleware/s3Client'
+import { fetchImage } from 'middleware/scraper'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {
@@ -64,6 +65,8 @@ export class ItemController {
             name: Joi.string().required().max(255),
             typeId: Joi.required(),
             userId: Joi.required(),
+            content: Joi.string().required().allow(''),
+            mainImageUrl: Joi.string().optional(),
         })
 
         const processRequestResult = validateRequest(req.body, schema)
@@ -72,7 +75,7 @@ export class ItemController {
             return res.status(400).json({ message: processRequestResult.error })
         }
 
-        const { name, typeId, userId, content } = processRequestResult.value
+        const { name, typeId, userId, content, mainImageUrl } = processRequestResult.value
 
         try {
             const typeObj = await DI.itemTypesRepository.findOneOrFail(typeId)
@@ -83,8 +86,15 @@ export class ItemController {
 
             if (req.files && req.files.mainImage) {
                 const mainImage = req.files.mainImage as any
+
                 console.log(mainImage)
-                mainImagePath = await uploadFile(mainImage.name, mainImage.data)
+
+                mainImagePath = await uploadFile(mainImage.name, mainImage.data, mainImage.mimetype)
+            } else if (mainImageUrl) {
+                const mainImage = await fetchImage(mainImageUrl)
+                mainImagePath = await uploadFile(mainImage.name, mainImage.data, mainImage.fileType)
+            } else {
+                return res.status(400).json({ message: 'Missing Item Image.' })
             }
 
             const item = new Item(
@@ -118,15 +128,16 @@ export class ItemController {
             name: Joi.string(),
             type: Joi.string(),
             content: Joi.string(),
-        }).or('name', 'type', 'content')
+            votes: Joi.number(),
+        }).or('name', 'type', 'content', 'votes')
 
         const processRequestResult = validateRequest(req.body, schema)
 
         if (!processRequestResult.ok) {
-            return res.status(400).json(processRequestResult.error)
+            return res.status(400).json({ message: processRequestResult.error })
         }
 
-        const { name, type, content } = processRequestResult.value
+        const { name, type, content, votes } = processRequestResult.value
 
         try {
             const item = await DI.itemRepository.findOneOrFail(id)
@@ -148,6 +159,10 @@ export class ItemController {
 
             if (content) {
                 item.content = content
+            }
+
+            if (votes) {
+                item.votes = votes
             }
 
             await DI.itemRepository.flush()

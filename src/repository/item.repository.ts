@@ -21,7 +21,7 @@ export class ItemRepository extends EntityRepository<Item> {
         const [result, count] = await super.findAndCount(
             filter,
             ['type', 'user'],
-            { createdAt: QueryOrder.DESC },
+            { votes: QueryOrder.DESC, createdAt: QueryOrder.DESC },
             itemFilter.pageSize,
             offset
         )
