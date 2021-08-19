@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
-import { DI } from 'app'
-import { User } from 'model'
+import { DI } from '@app'
+import { User } from '@model/index'
 import Joi from 'joi'
-import { validateRequest } from 'middleware/schemaValidate'
-import { createTokenPair, verifyPassword, verifyRefreshToken } from 'middleware/authFunctions'
-import { RefreshToken } from 'model/refresh_token.model'
-import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from 'config/auth_config'
+import { validateRequest } from '@middleware/schemaValidate'
+import { createTokenPair, verifyPassword, verifyRefreshToken } from '@middleware/authFunctions'
+import { RefreshToken } from '@model/refresh_token.model'
+import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
 
 export class AuthController {
     static signup = async (req: Request, res: Response) => {

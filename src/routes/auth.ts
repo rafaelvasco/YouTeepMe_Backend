@@ -1,6 +1,6 @@
-import { AuthController } from 'controller'
+import { AuthController } from '@controller/index'
 import { Router } from 'express'
-import { authorize } from 'middleware/authorize'
+import { authorize } from '@middleware/authorize'
 
 const router = Router()
 

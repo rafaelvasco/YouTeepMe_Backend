@@ -1,5 +1,5 @@
 import { Entity, Property } from '@mikro-orm/core'
-import { BaseModel } from 'model'
+import { BaseModel } from '@model/index'
 
 @Entity({ collection: 'types' })
 export class ItemType extends BaseModel {

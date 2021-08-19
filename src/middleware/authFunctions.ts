@@ -1,8 +1,8 @@
-import { User } from 'model'
+import { User } from '@model/index'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { Token } from 'types/Token'
-import { TokenPair } from 'types/TokenPair'
+import { Token } from 'src/dto/Token'
+import { TokenPair } from 'src/dto/TokenPair'
 
 export const createAuthToken = (user: User): Token => {
     const JWT_SECRET = process.env.AUTH_SECRET

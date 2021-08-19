@@ -1,6 +1,6 @@
 import { Entity, ManyToOne, Property } from '@mikro-orm/core'
-import { BaseModel, ItemType, User } from 'model'
-import { ItemRepository } from 'repository'
+import { BaseModel, ItemType, User } from '@model/index'
+import { ItemRepository } from '@repository/index'
 
 @Entity({ collection: 'items', customRepository: () => ItemRepository })
 export class Item extends BaseModel {

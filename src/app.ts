@@ -1,16 +1,16 @@
 import express, { NextFunction, Request, Response } from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
-import routes from 'routes'
+import routes from '@routes/index'
 import { EntityManager, MikroORM, RequestContext } from '@mikro-orm/core'
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection'
 import { EntityRepository } from '@mikro-orm/mongodb'
-import { ItemRepository, UserRepository } from 'repository'
-import { Item, ItemType, User } from 'model'
-import { RefreshToken } from 'model/refresh_token.model'
+import { ItemRepository, UserRepository } from '@repository/index'
+import { Item, ItemType, User } from '@model/index'
+import { RefreshToken } from '@model/refresh_token.model'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
-import { MAX_FILE_SIZE } from 'config/fileupload_config'
+import { MAX_FILE_SIZE } from '@config/fileupload_config'
 
 require('dotenv').config()
 

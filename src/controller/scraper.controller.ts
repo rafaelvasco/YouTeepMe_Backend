@@ -1,15 +1,13 @@
-import { Request, Response } from "express";
-import Joi from "joi"
-import { validateRequest } from "middleware/schemaValidate"
-import { scrapeImages } from "middleware/scraper";
+import { Request, Response } from 'express'
+import Joi from 'joi'
+import { validateRequest } from '@middleware/schemaValidate'
+import { scrapeImages } from '@middleware/scraper'
 
 export class ScraperController {
-
-    static scrapeImagesAPI = async (req: Request, res: Response)  => {
-
+    static scrapeImagesAPI = async (req: Request, res: Response) => {
         const schema = Joi.object({
             query: Joi.string().required(),
-            maxResults: Joi.number().default(10)
+            maxResults: Joi.number().default(10),
         })
 
         const processRequestResult = validateRequest(req.query, schema)
@@ -23,6 +21,5 @@ export class ScraperController {
         const result = await scrapeImages(query, maxResults)
 
         return res.status(200).json(result)
-
     }
 }

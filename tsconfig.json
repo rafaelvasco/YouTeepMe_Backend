@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
-        "target": "ES6",
+        "target": "es2017",
         "lib": ["esnext"],
+        "removeComments": true,
         "outDir": "./dist",
         "sourceMap": true,
         "strict": true,
@@ -10,7 +11,9 @@
         "noUnusedLocals": true,
         "noImplicitReturns": true,
         "esModuleInterop": true,
+        "skipLibCheck": true,
         "module": "CommonJS",
+        "incremental": true,
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "declaration": true,
@@ -18,8 +21,24 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false,
-        "baseUrl": "./src"
+        "baseUrl": "./",
+        "paths": {
+            "@app": ["src/app"],
+            "@dto/*": ["src/dto/*"],
+            "@routes/*": ["src/routes/*"],
+            "@repository/*": ["src/repository/*"],
+            "@model/*": ["src/model/*"],
+            "@middleware/*": ["src/middleware/*"],
+            "@controller/*": ["src/controller/*"],
+            "@config/*": ["src/config/*"]
+        },
+        "plugins": [
+            {
+                "transform": "@zerollup/ts-transform-paths"
+            }
+        ]
     },
-    "include": ["**/*.ts"],
-    "exclude": ["node_modules", "dist"]
+
+    "include": ["./src/**/*.ts"],
+    "exclude": ["node_modules", "dist", "out-tsc"]
 }

@@ -1,5 +1,5 @@
 import { Entity, ManyToOne, Property } from '@mikro-orm/core'
-import { BaseModel } from 'model'
+import { BaseModel } from '@model/index'
 import { User } from './user.model'
 
 @Entity({ collection: 'refresh_tokens' })

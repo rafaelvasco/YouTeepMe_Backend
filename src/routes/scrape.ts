@@ -1,4 +1,4 @@
-import { ScraperController } from 'controller/scraper.controller'
+import { ScraperController } from '@controller/scraper.controller'
 import { Router } from 'express'
 //import { authorize } from 'middleware/authorize'
 

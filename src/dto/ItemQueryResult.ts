@@ -1,4 +1,4 @@
-import { Item } from 'model'
+import { Item } from '@model/index'
 
 type ItemQueryResult = {
     items: Item[]

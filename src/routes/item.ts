@@ -1,6 +1,6 @@
-import { ItemController } from 'controller'
+import { ItemController } from '@controller/index'
 import { Router } from 'express'
-import { authorize } from 'middleware/authorize'
+import { authorize } from '@middleware/authorize'
 
 const router = Router()
 

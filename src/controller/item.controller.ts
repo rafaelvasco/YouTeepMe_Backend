@@ -1,11 +1,11 @@
-import ItemFilter from 'types/ItemFilter'
+import ItemFilter from 'src/dto/ItemFilter'
 import { Request, Response } from 'express'
-import { DI } from 'app'
-import { Item } from 'model'
+import { DI } from '@app'
+import { Item } from '@model/index'
 import Joi from 'joi'
-import { validateRequest } from 'middleware/schemaValidate'
-import { deleteFile, uploadFile } from 'middleware/s3Client'
-import { fetchImage } from 'middleware/scraper'
+import { validateRequest } from '@middleware/schemaValidate'
+import { deleteFile, uploadFile } from '@middleware/s3Client'
+import { fetchImage } from '@middleware/scraper'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {

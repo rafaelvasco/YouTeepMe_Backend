@@ -1,8 +1,8 @@
 import { BeforeCreate, Entity, Enum, Property } from '@mikro-orm/core'
 import bcrypt from 'bcryptjs'
-import { BaseModel } from 'model'
-import { UserRepository } from 'repository'
-import { UserRole } from 'types/UserRole'
+import { BaseModel } from '@model/index'
+import { UserRepository } from '@repository/index'
+import { UserRole } from 'src/dto/UserRole'
 
 @Entity({ collection: 'users', customRepository: () => UserRepository })
 export class User extends BaseModel {

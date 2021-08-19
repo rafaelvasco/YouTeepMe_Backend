@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { DI } from 'app'
-import { User } from 'model'
+import { DI } from '@app'
+import { User } from '@model/index'
 import Joi from 'joi'
-import { validateRequest } from 'middleware/schemaValidate'
+import { validateRequest } from '@middleware/schemaValidate'
 
 export class UserController {
     static getOneById = async (req: Request, res: Response) => {

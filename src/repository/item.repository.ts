@@ -1,9 +1,9 @@
 import { QueryOrder } from '@mikro-orm/core'
 import { EntityRepository } from '@mikro-orm/mongodb'
-import { DI } from 'app'
-import { Item, ItemType } from 'model'
-import ItemFilter from 'types/ItemFilter'
-import ItemQueryResult from 'types/ItemQueryResult'
+import { DI } from '@app'
+import { Item, ItemType } from '@model/index'
+import ItemFilter from 'src/dto/ItemFilter'
+import ItemQueryResult from 'src/dto/ItemQueryResult'
 
 export class ItemRepository extends EntityRepository<Item> {
     async findByFilter(itemFilter: ItemFilter): Promise<ItemQueryResult> {

@@ -1,5 +1,5 @@
-import { DI } from 'app'
-import { AUTH_COOKIE_NAME } from 'config/auth_config'
+import { DI } from '@app'
+import { AUTH_COOKIE_NAME } from '@config/auth_config'
 import { NextFunction, Request, Response } from 'express'
 import { verifyToken } from './authFunctions'
 
