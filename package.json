@@ -7,7 +7,7 @@
     "scripts": {
         "start": "ts-node -r tsconfig-paths/register src/index.ts",
         "dev": "node ./node_modules/nodemon/bin/nodemon.js",
-        "build": "rimraf dist && ttsc -P ./tsconfig.json",
+        "build": "ttsc -P ./tsconfig.json",
         "run:prod": "node ./dist/index.js"
     },
     "dependencies": {
