@@ -6,7 +6,6 @@ const IMAGE_SCRAPE_PATTERN =
     /\[1,\[0,"(?<id>[\d\w\-_]+)",\["https?:\/\/(?:[^"]+)",\d+,\d+\]\s?,\["(?<url>https?:\/\/(?:[^"]+))",\d+,\d+\]/gm
 
 export type ImageData = {
-    name: string
     data: any
     fileType: string
 }
@@ -16,9 +15,7 @@ export const fetchImage = async (url: string): Promise<ImageData> => {
         responseType: 'arraybuffer',
         reponseEncoding: 'binary',
     })
-    const fileName = url.substring(url.lastIndexOf('/') + 1)
     return {
-        name: fileName,
         data: Buffer.from(result.data),
         fileType: result.headers['content-type'],
     }

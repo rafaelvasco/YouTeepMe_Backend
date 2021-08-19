@@ -6,6 +6,7 @@ import Joi from 'joi'
 import { validateRequest } from '@middleware/schemaValidate'
 import { deleteFile, uploadFile } from '@middleware/s3Client'
 import { fetchImage } from '@middleware/scraper'
+import { nanoid } from 'nanoid'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {
@@ -87,12 +88,14 @@ export class ItemController {
             if (req.files && req.files.mainImage) {
                 const mainImage = req.files.mainImage as any
 
-                console.log(mainImage)
+                const imageFileName = 'image_' + nanoid()
 
-                mainImagePath = await uploadFile(mainImage.name, mainImage.data, mainImage.mimetype)
+                mainImagePath = await uploadFile(imageFileName, mainImage.data, mainImage.mimetype)
             } else if (mainImageUrl) {
                 const mainImage = await fetchImage(mainImageUrl)
-                mainImagePath = await uploadFile(mainImage.name, mainImage.data, mainImage.fileType)
+
+                const imageFileName = 'image_' + nanoid()
+                mainImagePath = await uploadFile(imageFileName, mainImage.data, mainImage.fileType)
             } else {
                 return res.status(400).json({ message: 'Missing Item Image.' })
             }

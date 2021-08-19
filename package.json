@@ -28,6 +28,7 @@
         "joi": "^17.4.0",
         "jsonwebtoken": "^8.5.1",
         "mongodb": "^3.6.5",
+        "nanoid": "^3.1.25",
         "snoowrap": "^1.23.0"
     },
     "devDependencies": {
