@@ -117,6 +117,40 @@ export class ItemController {
         }
     }
 
+    static voteItem = async (req: Request, res: Response) => {
+        console.info('ItemController::voteItem')
+
+        const id = req.query.id as string
+
+        if (!id) {
+            return res.status(400).json({ message: 'Expected: id' })
+        }
+
+        const schema = Joi.object({
+            votes: Joi.number().required(),
+        })
+
+        const processRequestResult = validateRequest(req.body, schema)
+
+        if (!processRequestResult.ok) {
+            return res.status(400).json({ message: processRequestResult.error })
+        }
+
+        const { votes } = processRequestResult.value
+
+        try {
+            const item = await DI.itemRepository.findOneOrFail(id)
+
+            item.votes = votes
+
+            await DI.itemRepository.flush()
+
+            return res.status(200).json({ message: 'Operation Successful' })
+        } catch (e) {
+            return res.status(500).json({ message: e.message })
+        }
+    }
+
     static updateItem = async (req: Request, res: Response) => {
         console.info('ItemController::updateItem')
 

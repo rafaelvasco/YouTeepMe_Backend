@@ -19,6 +19,9 @@ router.post('/', authorize(['ADMIN']), ItemController.createItem)
 // Update Item
 router.patch('/', authorize(['ADMIN']), ItemController.updateItem)
 
+// Vote Item (PUBLIC)
+router.patch('/vote', ItemController.voteItem)
+
 // Delete Item
 
 router.delete('/', authorize(['ADMIN']), ItemController.deleteItem)
