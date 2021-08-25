@@ -13,10 +13,8 @@ export class ItemController {
         console.info('ItemController::queryItems')
 
         const filter = req.body as ItemFilter
-        filter.tags ??= []
         filter.page ??= 1
         filter.pageSize ??= 100
-        filter.type ??= null
 
         try {
             const result = await DI.itemRepository.findByFilter(filter)

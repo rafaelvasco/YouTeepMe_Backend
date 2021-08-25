@@ -3,6 +3,7 @@ type ItemFilter = {
     tags: string[] | null
     page: number
     pageSize: number
+    queryText: string | null
 }
 
 export default ItemFilter
