@@ -164,7 +164,8 @@ export class ItemController {
             type: Joi.string(),
             content: Joi.string(),
             votes: Joi.number(),
-        }).or('name', 'type', 'content', 'votes')
+            active: Joi.boolean(),
+        }).or('name', 'type', 'content', 'votes', 'active')
 
         const processRequestResult = validateRequest(req.body, schema)
 
@@ -172,7 +173,7 @@ export class ItemController {
             return res.status(400).json({ message: processRequestResult.error })
         }
 
-        const { name, type, content, votes } = processRequestResult.value
+        const { name, type, content, votes, active } = processRequestResult.value
 
         try {
             const item = await DI.itemRepository.findOneOrFail(id)
@@ -198,6 +199,10 @@ export class ItemController {
 
             if (votes) {
                 item.votes = votes
+            }
+
+            if (typeof active !== 'undefined' && active !== null) {
+                item.active = active
             }
 
             await DI.itemRepository.flush()

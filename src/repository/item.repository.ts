@@ -9,6 +9,10 @@ export class ItemRepository extends EntityRepository<Item> {
     async findByFilter(itemFilter: ItemFilter): Promise<ItemQueryResult> {
         let filter = {} as any
 
+        if (itemFilter.active) {
+            filter.active = itemFilter.active
+        }
+
         if (itemFilter.type) {
             const itemType = await DI.itemTypesRepository.findOneOrFail(itemFilter.type)
             filter.type = itemType
