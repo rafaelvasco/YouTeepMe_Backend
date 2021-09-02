@@ -8,6 +8,7 @@ import { RefreshToken } from '@model/refresh_token.model'
 import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
 
 const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || undefined
+const USE_SECURE_COOKIES = (COOKIE_DOMAIN && /https/.test(COOKIE_DOMAIN)) as boolean
 
 export class AuthController {
     static signup = async (req: Request, res: Response) => {
@@ -44,14 +45,14 @@ export class AuthController {
                 maxAge: accessToken.maxAge,
                 httpOnly: true,
                 domain: COOKIE_DOMAIN,
-                secure: true,
+                secure: USE_SECURE_COOKIES,
             })
 
             res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                 maxAge: refreshToken.maxAge,
                 httpOnly: true,
                 domain: COOKIE_DOMAIN,
-                secure: true,
+                secure: USE_SECURE_COOKIES,
             })
 
             return res.status(201).json(user)
@@ -134,14 +135,14 @@ export class AuthController {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
                     domain: COOKIE_DOMAIN,
-                    secure: true,
+                    secure: USE_SECURE_COOKIES,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
                     domain: COOKIE_DOMAIN,
-                    secure: true,
+                    secure: USE_SECURE_COOKIES,
                 })
 
                 return res.status(201).json(user)
@@ -194,14 +195,14 @@ export class AuthController {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
                     domain: COOKIE_DOMAIN,
-                    secure: true,
+                    secure: USE_SECURE_COOKIES,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
                     domain: COOKIE_DOMAIN,
-                    secure: true,
+                    secure: USE_SECURE_COOKIES,
                 })
             }
 
