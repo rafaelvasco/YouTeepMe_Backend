@@ -7,7 +7,7 @@ import { createTokenPair, verifyPassword, verifyRefreshToken } from '@middleware
 import { RefreshToken } from '@model/refresh_token.model'
 import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
 
-const ORIGIN = process.env.ORIGIN as string
+const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || undefined
 
 export class AuthController {
     static signup = async (req: Request, res: Response) => {
@@ -43,14 +43,14 @@ export class AuthController {
             res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                 maxAge: accessToken.maxAge,
                 httpOnly: true,
-                domain: ORIGIN,
+                domain: COOKIE_DOMAIN,
                 secure: true,
             })
 
             res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                 maxAge: refreshToken.maxAge,
                 httpOnly: true,
-                domain: ORIGIN,
+                domain: COOKIE_DOMAIN,
                 secure: true,
             })
 
@@ -133,14 +133,14 @@ export class AuthController {
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
-                    domain: ORIGIN,
+                    domain: COOKIE_DOMAIN,
                     secure: true,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
-                    domain: ORIGIN,
+                    domain: COOKIE_DOMAIN,
                     secure: true,
                 })
 
@@ -193,14 +193,14 @@ export class AuthController {
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
-                    domain: ORIGIN,
+                    domain: COOKIE_DOMAIN,
                     secure: true,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
-                    domain: ORIGIN,
+                    domain: COOKIE_DOMAIN,
                     secure: true,
                 })
             }
