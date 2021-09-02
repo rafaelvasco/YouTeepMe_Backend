@@ -7,6 +7,8 @@ import { createTokenPair, verifyPassword, verifyRefreshToken } from '@middleware
 import { RefreshToken } from '@model/refresh_token.model'
 import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
 
+const ORIGIN = process.env.ORIGIN as string
+
 export class AuthController {
     static signup = async (req: Request, res: Response) => {
         const schema = Joi.object({
@@ -41,11 +43,13 @@ export class AuthController {
             res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                 maxAge: accessToken.maxAge,
                 httpOnly: true,
+                domain: ORIGIN,
             })
 
             res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                 maxAge: refreshToken.maxAge,
                 httpOnly: true,
+                domain: ORIGIN,
             })
 
             return res.status(201).json(user)
@@ -127,11 +131,13 @@ export class AuthController {
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
+                    domain: ORIGIN,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
+                    domain: ORIGIN,
                 })
 
                 return res.status(201).json(user)
@@ -183,11 +189,13 @@ export class AuthController {
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
+                    domain: ORIGIN,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
+                    domain: ORIGIN,
                 })
             }
 
