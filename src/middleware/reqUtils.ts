@@ -9,10 +9,6 @@ export const getClientIp = (req: Request) => {
         if (ipAddr) {
             const list = ipAddr.split(',')
             ipAddr = list[list.length - 1]
-        } else {
-            if (req.socket.remoteAddress) {
-                ipAddr = req.socket.remoteAddress
-            }
         }
     }
 
