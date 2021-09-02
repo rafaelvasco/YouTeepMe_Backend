@@ -87,6 +87,10 @@ class App {
                 },
             })
         )
+
+        if (process.env.NODE_ENV == 'production') {
+            this.express.enable('trust proxy')
+        }
     }
 
     private configureRoutes() {
