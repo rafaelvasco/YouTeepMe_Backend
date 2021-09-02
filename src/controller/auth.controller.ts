@@ -6,6 +6,7 @@ import { validateRequest } from '@middleware/schemaValidate'
 import { createTokenPair, verifyPassword, verifyRefreshToken } from '@middleware/authFunctions'
 import { RefreshToken } from '@model/refresh_token.model'
 import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
+import { getClientIp } from '@middleware/reqUtils'
 
 const USE_SECURE_COOKIES = 'true' === process.env.SECURE_COOKIES
 
@@ -38,7 +39,9 @@ export class AuthController {
 
             const { accessToken, refreshToken } = createTokenPair(user)
 
-            await AuthController.saveRefreshToken(refreshToken.token, user, req.ip)
+            const clientIp = getClientIp(req)
+
+            await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
 
             res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                 maxAge: accessToken.maxAge,
@@ -126,7 +129,9 @@ export class AuthController {
             if (validPassword) {
                 const { accessToken, refreshToken } = createTokenPair(user)
 
-                await AuthController.saveRefreshToken(refreshToken.token, user, req.ip)
+                const clientIp = getClientIp(req)
+
+                await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
 
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
@@ -184,7 +189,9 @@ export class AuthController {
             if (!authToken) {
                 const { accessToken, refreshToken } = createTokenPair(user)
 
-                await AuthController.saveRefreshToken(refreshToken.token, user, req.ip)
+                const clientIp = getClientIp(req)
+
+                await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
 
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
