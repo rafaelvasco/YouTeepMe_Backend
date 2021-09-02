@@ -44,12 +44,14 @@ export class AuthController {
                 maxAge: accessToken.maxAge,
                 httpOnly: true,
                 domain: ORIGIN,
+                secure: true,
             })
 
             res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                 maxAge: refreshToken.maxAge,
                 httpOnly: true,
                 domain: ORIGIN,
+                secure: true,
             })
 
             return res.status(201).json(user)
@@ -132,12 +134,14 @@ export class AuthController {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
                     domain: ORIGIN,
+                    secure: true,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
                     domain: ORIGIN,
+                    secure: true,
                 })
 
                 return res.status(201).json(user)
@@ -190,12 +194,14 @@ export class AuthController {
                     maxAge: accessToken.maxAge,
                     httpOnly: true,
                     domain: ORIGIN,
+                    secure: true,
                 })
 
                 res.cookie(REFRESH_COOKIE_NAME, refreshToken.token, {
                     maxAge: refreshToken.maxAge,
                     httpOnly: true,
                     domain: ORIGIN,
+                    secure: true,
                 })
             }
 
