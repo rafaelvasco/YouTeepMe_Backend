@@ -64,6 +64,8 @@ export class AuthController {
 
         if (existingRefreshToken) {
             existingRefreshToken.token = token
+            existingRefreshToken.ip = ip
+            existingRefreshToken.userId = user.id
 
             await DI.refreshTokenRepository.flush()
 
