@@ -1,12 +1,13 @@
-import { Ipware } from '@fullerstack/nax-ipware'
 import { NextFunction, Request, Response } from 'express'
 
 export const injectIpOnRequest = (req: Request, res: Response, next: NextFunction) => {
-    const ipWare = new Ipware()
-    req.ipInfo = ipWare.getClientIP(req)
+    const fwd = req.headers['X-Forwarded-For'] as string
+
+    req.clientIp = fwd || req.ip
+
     next()
 }
 
 export const getReqIp = (req: Request) => {
-    return req.ipInfo?.ip ?? 'localhost'
+    return req.clientIp ?? 'localhost'
 }
