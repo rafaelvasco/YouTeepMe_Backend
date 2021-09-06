@@ -91,8 +91,9 @@ class App {
 
         this.express.use(injectIpOnRequest)
 
-        if (process.env.NODE_ENV == 'production') {
-            this.express.set('trust proxy', true)
+        if (process.env.NODE_ENV === 'production') {
+            console.log('Enabling Trust Proxy')
+            this.express.enable('trust proxy')
         }
     }
 
