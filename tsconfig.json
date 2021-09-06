@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "typeRoots": ["./types"],
         "target": "es2017",
         "lib": ["esnext"],
         "removeComments": true,
@@ -38,7 +39,6 @@
             }
         ]
     },
-
     "include": ["./src/**/*.ts"],
     "exclude": ["node_modules", "dist", "out-tsc"]
 }

@@ -6,7 +6,7 @@ import { validateRequest } from '@middleware/schemaValidate'
 import { createTokenPair, verifyPassword, verifyRefreshToken } from '@middleware/authFunctions'
 import { RefreshToken } from '@model/refresh_token.model'
 import { AUTH_COOKIE_NAME, REFRESH_COOKIE_NAME } from '@config/auth_config'
-import { getClientIp } from '@middleware/reqUtils'
+import { getReqIp } from '@middleware/reqUtils'
 
 const USE_SECURE_COOKIES = 'true' === process.env.SECURE_COOKIES
 
@@ -39,9 +39,7 @@ export class AuthController {
 
             const { accessToken, refreshToken } = createTokenPair(user)
 
-            const clientIp = getClientIp(req)
-
-            await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
+            await AuthController.saveRefreshToken(refreshToken.token, user, getReqIp(req))
 
             res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                 maxAge: accessToken.maxAge,
@@ -56,7 +54,7 @@ export class AuthController {
             })
 
             return res.status(201).json(user)
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -129,9 +127,7 @@ export class AuthController {
             if (validPassword) {
                 const { accessToken, refreshToken } = createTokenPair(user)
 
-                const clientIp = getClientIp(req)
-
-                await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
+                await AuthController.saveRefreshToken(refreshToken.token, user, getReqIp(req))
 
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
@@ -149,7 +145,7 @@ export class AuthController {
             } else {
                 return res.status(403).json({ message: 'Invalid email or password.' })
             }
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -189,9 +185,7 @@ export class AuthController {
             if (!authToken) {
                 const { accessToken, refreshToken } = createTokenPair(user)
 
-                const clientIp = getClientIp(req)
-
-                await AuthController.saveRefreshToken(refreshToken.token, user, clientIp)
+                await AuthController.saveRefreshToken(refreshToken.token, user, getReqIp(req))
 
                 res.cookie(AUTH_COOKIE_NAME, accessToken.token, {
                     maxAge: accessToken.maxAge,
@@ -207,7 +201,7 @@ export class AuthController {
             }
 
             return res.status(200).json(user)
-        } catch (e) {
+        } catch (e: any) {
             if (e.name === 'TokenExpiredError') {
                 console.log('Session timed out, please login again')
                 return res.status(403).json({ message: 'Session timed out,please login again' })
@@ -251,7 +245,7 @@ export class AuthController {
             await DI.userRepository.flush()
 
             return res.status(201).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json(e.message)
         }
     }

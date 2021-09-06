@@ -11,6 +11,7 @@ import { RefreshToken } from '@model/refresh_token.model'
 import cookieParser from 'cookie-parser'
 import fileUpload from 'express-fileupload'
 import { MAX_FILE_SIZE } from '@config/fileupload_config'
+import { injectIpOnRequest } from '@middleware/reqUtils'
 
 require('dotenv').config()
 
@@ -87,6 +88,8 @@ class App {
                 },
             })
         )
+
+        this.express.use(injectIpOnRequest)
 
         if (process.env.NODE_ENV == 'production') {
             this.express.set('trust proxy', true)

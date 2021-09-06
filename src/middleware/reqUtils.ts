@@ -1,14 +1,12 @@
-import { Request } from 'express'
+import { Ipware } from '@fullerstack/nax-ipware'
+import { NextFunction, Request, Response } from 'express'
 
-export const getClientIp = (req: Request) => {
-    let ipAddr = req.headers['x-forwarded-for'] as string
+export const injectIpOnRequest = (req: Request, res: Response, next: NextFunction) => {
+    const ipWare = new Ipware()
+    req.ipInfo = ipWare.getClientIP(req)
+    next()
+}
 
-    if (ipAddr) {
-        const list = ipAddr.split(',')
-        ipAddr = list[list.length - 1]
-    } else {
-        ipAddr = req.ip
-    }
-
-    return ipAddr
+export const getReqIp = (req: Request) => {
+    return req.ipInfo?.ip ?? 'localhost'
 }

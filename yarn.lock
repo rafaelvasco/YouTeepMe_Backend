@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@fullerstack/nax-ipware@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@fullerstack/nax-ipware/-/nax-ipware-0.0.4.tgz#bb5ada89509da915a50522f4ba81cb8d63990b0c"
+  integrity sha512-jE+/JBkoefWjxHCxEzmZANPFKFQYfthQYxbDbNux+VIhB2yymNet6G0hOM/7nf1l6V1RlhLLT30y20/xr+h23g==
+  dependencies:
+    ts-essentials "^7.0.2"
+    tslib "^2.0.0"
+
 "@hapi/hoek@^9.0.0":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
@@ -2293,6 +2301,11 @@ tough-cookie@^2.3.3, tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
+ts-essentials@^7.0.2:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-7.0.3.tgz#686fd155a02133eedcc5362dc8b5056cde3e5a38"
+  integrity sha512-8+gr5+lqO3G84KdiTSMRLtuyJ+nTBVRKuCrK4lidMPdVeEp0uqC875uE5NMcaA7YYMN7XsNiFQuMvasF8HT/xQ==
+
 ts-morph@10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/ts-morph/-/ts-morph-10.0.2.tgz#292418207db467326231b2be92828b5e295e7946"
@@ -2321,6 +2334,11 @@ tsconfig-paths@^3.10.1:
     json5 "^2.2.0"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@^2.0.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tslib@^2.2.0:
   version "2.2.0"

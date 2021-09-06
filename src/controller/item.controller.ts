@@ -7,10 +7,13 @@ import { validateRequest } from '@middleware/schemaValidate'
 import { deleteFile, uploadFile } from '@middleware/s3Client'
 import { fetchImage } from '@middleware/scraper'
 import { nanoid } from 'nanoid'
+import { getReqIp } from '@middleware/reqUtils'
 
 export class ItemController {
     static queryItems = async (req: Request, res: Response) => {
         console.info('ItemController::queryItems')
+
+        console.log(`Ip: ${getReqIp(req)}`)
 
         const filter = req.body as ItemFilter
         filter.page ??= 1
@@ -19,7 +22,7 @@ export class ItemController {
         try {
             const result = await DI.itemRepository.findByFilter(filter)
             res.json(result)
-        } catch (e) {
+        } catch (e: any) {
             res.status(500).json({ message: e.message })
         }
     }
@@ -30,7 +33,7 @@ export class ItemController {
         try {
             const result = await DI.itemTypesRepository.findAll()
             res.json(result)
-        } catch (e) {
+        } catch (e: any) {
             res.status(500).json({ message: e.message })
         }
     }
@@ -52,7 +55,7 @@ export class ItemController {
             }
 
             return res.json(result)
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -110,7 +113,7 @@ export class ItemController {
             await DI.itemRepository.persistAndFlush(item)
 
             return res.status(201).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -144,7 +147,7 @@ export class ItemController {
             await DI.itemRepository.flush()
 
             return res.status(200).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -208,7 +211,7 @@ export class ItemController {
             await DI.itemRepository.flush()
 
             return res.status(200).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -246,7 +249,7 @@ export class ItemController {
             await DI.itemRepository.remove(item).flush()
 
             return res.status(200).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }

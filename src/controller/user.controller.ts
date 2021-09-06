@@ -15,7 +15,7 @@ export class UserController {
         try {
             const user = await DI.userRepository.findOneOrFail(id)
             return res.json(user)
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -24,7 +24,7 @@ export class UserController {
         try {
             const result = await DI.userRepository.findAll()
             return res.json(result)
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
@@ -73,7 +73,7 @@ export class UserController {
             await DI.userRepository.flush()
 
             return res.status(200).json({ message: 'Operation Successful' })
-        } catch (e) {
+        } catch (e: any) {
             return res.status(500).json({ message: e.message })
         }
     }
