@@ -168,7 +168,7 @@ export class AuthController {
 
             const tokenDoc = await DI.refreshTokenRepository.findOne({
                 token: refreshToken,
-                ip: req.ip,
+                ip: getReqIp(req),
             })
 
             if (!tokenDoc) {
