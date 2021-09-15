@@ -160,6 +160,15 @@ export class AuthController {
 
         if (!refreshToken) {
             console.log('Error: Missing Token')
+
+            const tokenDoc = await DI.refreshTokenRepository.findOne({
+                ip: getReqIp(req),
+            })
+
+            if (tokenDoc) {
+                await DI.refreshTokenRepository.removeAndFlush(tokenDoc)
+            }
+
             return res.status(403).json({ message: 'Missing Token' })
         }
 
@@ -212,7 +221,7 @@ export class AuthController {
                 return res.status(403).json({ message: 'Invalid token,please login again!' })
             } else {
                 console.error(e)
-                return res.status(500).json({ e })
+                return res.status(500).json({ message: e })
             }
         }
     }
